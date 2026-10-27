@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b13">
+  <title>The Lucky Pot 🍀</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      color: white;
+      font-family: system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 75%, #155c37 0%, transparent 48%),
+        linear-gradient(180deg, #07152b 0%, #102b36 55%, #071b13 100%);
+    }
+
+    .scene {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+      isolation: isolate;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, white 1px, transparent 1.5px),
+        radial-gradient(circle, #b7ffb7 1px, transparent 1.5px);
+      background-size: 53px 67px, 83px 97px;
+      animation: twinkle 3s ease-in-out infinite alternate;
+      opacity: .5;
+      z-index: -1;
+    }
+
+    @keyframes twinkle {
+      from { opacity: .2; }
+      to { opacity: .7; }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 8vw, 3.6rem);
+      text-align: center;
+      color: #ffe79b;
+      text-shadow: 0 0 25px #ffbd35;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #d0f8d6;
+      font-size: 1rem;
+      margin: 10px 0 0;
+    }
+
+    .stage {
+      width: min(92vw, 440px);
+      height: 360px;
+      position: relative;
+      margin-top: 15px;
+    }
+
+    /* Το ουράνιο τόξο */
+    .rainbow {
+      position: absolute;
+      width: 310px;
+      height: 300px;
+      left: 50%;
+      top: 18px;
+      transform: translateX(-50%);
+      border-radius: 170px 170px 0 0;
+      background: conic-gradient(
+        from 225deg at 50% 100%,
+        #ff5757 0deg 14deg,
+        #ffae43 14deg 28deg,
+        #ffe76c 28deg 42deg,
+        #54e58b 42deg 56deg,
+        #52caff 56deg 70deg,
+        #a987ff 70deg 84deg,
+        transparent 84deg 96deg
+      );
+      -webkit-mask: radial-gradient(
+        ellipse at 50% 100%,
+        transparent 0 57%,
+        #000 58% 72%,
+        transparent 73%
+      );
+      mask: radial-gradient(
+        ellipse at 50% 100%,
+        transparent 0 57%,
+        #000 58% 72%,
+        transparent 73%
+      );
+      filter: drop-shadow(0 0 12px #7bffce);
+      opacity: .9;
+    }
+
+    /* Το τσουκάλι */
+    .pot {
+      position: absolute;
+      bottom: 33px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 94px;
+      z-index: 3;
+      filter: drop-shadow(0 0 18px #ffca46);
+      animation: potGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes potGlow {
+      from { filter: drop-shadow(0 0 8px #ffca46); }
+      to { filter: drop-shadow(0 0 27px #ffdc62); }
+    }
+
+    /* Ο καλικάντζαρος χορεύει σε κύκλο */
+    .dancer-orbit {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      left: 50%;
+      top: 72px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      animation: orbit 5s linear infinite;
+      z-index: 4;
+    }
+
+    .leprechaun {
+      position: absolute;
+      left: 50%;
+      top: -22px;
+      font-size: 66px;
+      transform: translateX(-50%);
+      transform-origin: center bottom;
+      animation: jig 0.42s ease-in-out infinite alternate;
+      filter: drop-shadow(0 5px 10px #0008);
+    }
+
+    @keyframes orbit {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to { transform: translateX(-50%) rotate(360deg); }
+    }
+
+    @keyframes jig {
+      from { rotate: -12deg; translate: -3px 0; }
+      to { rotate: 12deg; translate: 3px -9px; }
+    }
+
+    .ground {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      height: 48px;
+      border-radius: 50%;
+      background: #174a2c;
+      box-shadow: 0 -8px 28px #47e77b20;
+      z-index: 1;
+    }
+
+    .coin {
+      position: absolute;
+      font-size: 26px;
+      animation: float 2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 8px #ffdb55);
+    }
+
+    .coin.one { left: 13%; top: 53%; }
+    .coin.two { right: 12%; top: 37%; animation-delay: .5s; }
+    .coin.three { right: 20%; bottom: 19%; animation-delay: 1s; }
+    .coin.four { left: 22%; bottom: 25%; animation-delay: .8s; }
+
+    @keyframes float {
+      from { translate: 0 5px; rotate: -10deg; }
+      to { translate: 0 -13px; rotate: 12deg; }
+    }
+
+    .clover {
+      position: absolute;
+      font-size: 30px;
+      animation: float 2.5s ease-in-out infinite alternate;
+    }
+
+    .clover.one { left: 5%; top: 30%; }
+    .clover.two { right: 6%; top: 62%; animation-delay: .7s; }
+    .clover.three { left: 15%; bottom: 10%; }
+
+    .message {
+      text-align: center;
+      margin-top: 0;
+      z-index: 5;
+    }
+
+    .message h2 {
+      color: #ffe79b;
+      font-size: 1.35rem;
+      margin: 0 0 8px;
+    }
+
+    .message p {
+      color: #c8e9d0;
+      margin: 0;
+      font-size: .95rem;
+    }
+
+    .lucky-button {
+      margin-top: 22px;
+      padding: 14px 25px;
+      border: 1px solid #ffe79b;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f8d66d, #f4a72d);
+      color: #30200a;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 25px #ffc64b35;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .lucky-button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 32px #ffc64b75;
+    }
+
+    #fortune {
+      min-height: 28px;
+      margin-top: 14px;
+      color: #ffe79b;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 12px;
+      font-size: .75rem;
+      color: #8ab89a;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 5s !important;
+      }
+    }
+
+    @media (max-height: 720px) {
+      .stage {
+        height: 285px;
+        transform: scale(.82);
+        margin: -5px 0 -20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="scene">
+    <div class="stars"></div>
+
+    <h1>🍀 The Lucky Pot 🍀</h1>
+    <p class="subtitle">A little Irish magic just for you...</p>
+
+    <section class="stage" aria-label="A dancing Irish leprechaun">
+      <div class="rainbow"></div>
+
+      <span class="clover one">🍀</span>
+      <span class="clover two">✨</span>
+      <span class="clover three">🍀</span>
+
+      <span class="coin one">🪙</span>
+      <span class="coin two">✨</span>
+      <span class="coin three">🪙</span>
+      <span class="coin four">💛</span>
+
+      <div class="ground"></div>
+
+      <div class="dancer-orbit">
+        <div class="leprechaun" role="img" aria-label="Dancing leprechaun">
+          🕺🏻
+        </div>
+      </div>
+
+      <div class="pot" role="img" aria-label="Pot of gold">
+        🪙
+      </div>
+    </section>
+
+    <section class="message">
+      <h2>You've found the rainbow! 🌈</h2>
+      <p>A tiny leprechaun has a little luck for you.</p>
+
+      <button class="lucky-button" id="luckButton">
+        ✨ Get your lucky message ✨
+      </button>
+
+      <p id="fortune" aria-live="polite"></p>
+    </section>
+
+    <div class="footer">
+      Made with a little Irish magic 💚
+    </div>
+  </main>
+
+  <script>
+    const fortunes = [
+      "🍀 A little luck is coming your way!",
+      "✨ Something magical is waiting for you.",
+      "💛 May your pockets be full of gold!",
+      "🌈 Follow your rainbow and never stop dreaming.",
+      "🪙 The best treasure is the joy you share.",
+      "☘️ Today is your lucky day!",
+      "💚 Keep smiling. Magic is everywhere."
+    ];
+
+    document.getElementById("luckButton").addEventListener("click", () => {
+      const message =
+        fortunes[Math.floor(Math.random() * fortunes.length)];
+
+      document.getElementById("fortune").textContent = message;
+    });
+  </script>
+</body>
+</html>
